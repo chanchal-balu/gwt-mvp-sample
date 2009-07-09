@@ -13,19 +13,11 @@
 
 .gwt-StarsWidget ul li {
 	display: block;
-	background: url(img/bgr_lststars.png) no-repeat 0 0;
 	width: 16px;
 	height: 16px;
 	margin: 0px 1px;
 	float: left;
-}
-
-.gwt-StarsWidget ul li.marked {
-	background-position: 0 -16px;
-}
-
-.gwt-StarsWidget ul li.normal {
-	background-position: 0 0;
+	background: url(img/bgr_lststars.png) no-repeat 0 0;
 }
 
 .gwt-StarsWidget ul li a {
