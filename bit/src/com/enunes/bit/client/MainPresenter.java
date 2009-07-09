@@ -3,7 +3,7 @@
  */
 package com.enunes.bit.client;
 
-import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.HasWidgets;
 
 /**
  * @author esnunes@gmail.com (Eduardo S. Nunes)
@@ -11,6 +11,6 @@ import com.google.gwt.user.client.ui.Panel;
  */
 public interface MainPresenter {
 
-	void go(Panel panel);
+	void go(HasWidgets container);
 
 }

@@ -15,7 +15,7 @@ import com.enunes.bit.client.event.IssueUpdatedEvent;
 import com.enunes.bit.client.event.IssueUpdatedHandler;
 import com.enunes.bit.client.model.Issue;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.ui.Panel;
+import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -29,7 +29,7 @@ public class MainPresenterImpl implements MainPresenter {
 	private final MenuPresenter menuPresenter;
 	private final Provider<IssueDisplayPresenter> displayPresenter;
 	private final Provider<IssueEditPresenter> editPresenter;
-	private Panel panel;
+	private HasWidgets container;
 	private Widget editWidget;
 	private Widget displayWidget;
 
@@ -88,14 +88,14 @@ public class MainPresenterImpl implements MainPresenter {
 	private void doIssueUpdated(Issue issue) {
 		removeEditWidget();
 		displayWidget = displayPresenter.get().go(issue);
-		panel.add(displayWidget);
+		container.add(displayWidget);
 	}
 
 	private void doIssueEditCanceled(Issue issue) {
 		removeEditWidget();
 		if (issue != null) {
 			displayWidget = displayPresenter.get().go(issue);
-			panel.add(displayWidget);
+			container.add(displayWidget);
 		}
 	}
 
@@ -103,7 +103,7 @@ public class MainPresenterImpl implements MainPresenter {
 		removeDisplayWidget();
 		removeEditWidget();
 		editWidget = editPresenter.get().go();
-		panel.add(editWidget);
+		container.add(editWidget);
 	}
 
 	private void doIssueRemoved() {
@@ -113,26 +113,26 @@ public class MainPresenterImpl implements MainPresenter {
 	private void doIssueEdit(Issue issue) {
 		removeDisplayWidget();
 		editWidget = editPresenter.get().go(issue);
-		panel.add(editWidget);
+		container.add(editWidget);
 	}
 
 	private void removeDisplayWidget() {
 		if (displayWidget != null) {
-			panel.remove(displayWidget);
+			container.remove(displayWidget);
 			displayWidget = null;
 		}
 	}
 
 	private void removeEditWidget() {
 		if (editWidget != null) {
-			panel.remove(editWidget);
+			container.remove(editWidget);
 			editWidget = null;
 		}
 	}
 
-	public void go(Panel panel) {
-		this.panel = panel;
-		panel.add(menuPresenter.go());
+	public void go(HasWidgets container) {
+		this.container = container;
+		container.add(menuPresenter.go());
 	}
 
 }
