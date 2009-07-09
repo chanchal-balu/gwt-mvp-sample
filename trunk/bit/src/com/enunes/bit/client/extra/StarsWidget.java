@@ -86,9 +86,9 @@ public class StarsWidget extends Widget implements HasValue<Integer> {
 
 		for (int i = 0; i < count; i++) {
 			if (i <= value - 1) {
-				liElements[i].setClassName("marked");
+				liElements[i].getStyle().setProperty("backgroundPosition", "0 -16px");
 			} else {
-				liElements[i].setClassName("normal");
+				liElements[i].getStyle().setProperty("backgroundPosition", "0 0");
 			}
 			if (readOnly) {
 				aElements[i].getStyle().setProperty("display", "none");
@@ -96,7 +96,7 @@ public class StarsWidget extends Widget implements HasValue<Integer> {
 				aElements[i].getStyle().setProperty("display", "block");
 			}
 		}
-
+		
 	}
 
 	public boolean getReadOnly() {
