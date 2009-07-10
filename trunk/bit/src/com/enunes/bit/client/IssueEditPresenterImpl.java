@@ -52,12 +52,12 @@ public class IssueEditPresenterImpl implements IssueEditPresenter {
 
 	}
 
-	public Widget go() {
+	public Widget createIssue() {
 		issue = null;
 		return view.getWidget();
 	}
 
-	public Widget go(Issue issue) {
+	public Widget editIssue(Issue issue) {
 		this.issue = issue;
 		view.getTaskName().setText(issue.getTaskName());
 		view.getTaskReporter().setText(issue.getTaskReporter());

@@ -31,6 +31,6 @@ public interface IssueDisplayPresenter {
 
 	}
 
-	Widget go(Issue issue);
+	Widget showIssue(Issue issue);
 
 }
