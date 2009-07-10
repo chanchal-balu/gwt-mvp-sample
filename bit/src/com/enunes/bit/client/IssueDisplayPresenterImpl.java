@@ -39,7 +39,7 @@ public class IssueDisplayPresenterImpl implements IssueDisplayPresenter {
 
 	}
 
-	public Widget go(Issue issue) {
+	public Widget showIssue(Issue issue) {
 		this.issue = issue;
 		view.getTaskName().setText(issue.getTaskName());
 		view.getTaskReporter().setText(issue.getTaskReporter());

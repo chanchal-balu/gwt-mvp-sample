@@ -32,13 +32,13 @@ public interface IssueEditPresenter {
 	}
 
 	/**
-	 * New Issue
+	 * Creates a new Issue
 	 */
-	Widget go();
+	Widget createIssue();
 
 	/**
-	 * Edit Issue
+	 * Edits an Issue
 	 */
-	Widget go(Issue issue);
+	Widget editIssue(Issue issue);
 
 }

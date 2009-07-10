@@ -20,6 +20,6 @@ public interface MenuPresenter {
 
 	}
 
-	Widget go();
+	Widget showMenu();
 
 }

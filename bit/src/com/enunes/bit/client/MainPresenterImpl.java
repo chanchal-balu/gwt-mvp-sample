@@ -87,14 +87,14 @@ public class MainPresenterImpl implements MainPresenter {
 
 	private void doIssueUpdated(Issue issue) {
 		removeEditWidget();
-		displayWidget = displayPresenter.get().go(issue);
+		displayWidget = displayPresenter.get().showIssue(issue);
 		container.add(displayWidget);
 	}
 
 	private void doIssueEditCanceled(Issue issue) {
 		removeEditWidget();
 		if (issue != null) {
-			displayWidget = displayPresenter.get().go(issue);
+			displayWidget = displayPresenter.get().showIssue(issue);
 			container.add(displayWidget);
 		}
 	}
@@ -102,7 +102,7 @@ public class MainPresenterImpl implements MainPresenter {
 	private void doAddNewIssue() {
 		removeDisplayWidget();
 		removeEditWidget();
-		editWidget = editPresenter.get().go();
+		editWidget = editPresenter.get().createIssue();
 		container.add(editWidget);
 	}
 
@@ -112,7 +112,7 @@ public class MainPresenterImpl implements MainPresenter {
 
 	private void doIssueEdit(Issue issue) {
 		removeDisplayWidget();
-		editWidget = editPresenter.get().go(issue);
+		editWidget = editPresenter.get().editIssue(issue);
 		container.add(editWidget);
 	}
 
@@ -132,7 +132,7 @@ public class MainPresenterImpl implements MainPresenter {
 
 	public void go(HasWidgets container) {
 		this.container = container;
-		container.add(menuPresenter.go());
+		container.add(menuPresenter.showMenu());
 	}
 
 }

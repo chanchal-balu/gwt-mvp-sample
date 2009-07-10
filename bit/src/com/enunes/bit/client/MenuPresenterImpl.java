@@ -31,7 +31,7 @@ public class MenuPresenterImpl implements MenuPresenter {
 
 	}
 
-	public Widget go() {
+	public Widget showMenu() {
 		return view.getWidget();
 	}
 
