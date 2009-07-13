@@ -9,7 +9,6 @@ import com.enunes.bit.client.model.Issue;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
 /**
@@ -26,13 +25,13 @@ public class IssueEditPresenterImpl implements IssueEditPresenter {
 
 		this.view = view;
 
-		view.addCancelClickHandler(new ClickHandler() {
+		view.getCancelClickHandlers().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				eventBus.fireEvent(new IssueEditCanceledEvent(issue));
 			}
 		});
 
-		view.addSaveClickHandler(new ClickHandler() {
+		view.getSaveClickHandlers().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				// TODO: replace current code by a service call to save it in
 				// the database
@@ -52,16 +51,21 @@ public class IssueEditPresenterImpl implements IssueEditPresenter {
 
 	}
 
-	public Widget createIssue() {
+	public View createIssue() {
 		issue = null;
-		return view.getWidget();
+		return view;
 	}
 
-	public Widget editIssue(Issue issue) {
+	public View editIssue(Issue issue) {
 		this.issue = issue;
 		view.getTaskName().setText(issue.getTaskName());
 		view.getTaskReporter().setText(issue.getTaskReporter());
 		view.getStars().setValue(issue.getStars());
-		return view.getWidget();
+		return view;
 	}
+
+	public BaseView getView() {
+		return view;
+	}
+
 }

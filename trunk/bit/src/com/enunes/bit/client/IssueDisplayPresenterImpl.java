@@ -6,7 +6,6 @@ import com.enunes.bit.client.model.Issue;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
 /**
@@ -24,13 +23,13 @@ public class IssueDisplayPresenterImpl implements IssueDisplayPresenter {
 
 		this.view = view;
 
-		view.addEditClickHandler(new ClickHandler() {
+		view.getEditClickHandlers().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				eventBus.fireEvent(new IssueEditEvent(issue));
 			}
 		});
 
-		view.addRemoveClickHandler(new ClickHandler() {
+		view.getRemoveClickHandlers().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				// TODO: remove it from database
 				eventBus.fireEvent(new IssueRemovedEvent());
@@ -39,12 +38,16 @@ public class IssueDisplayPresenterImpl implements IssueDisplayPresenter {
 
 	}
 
-	public Widget showIssue(Issue issue) {
+	public View showIssue(Issue issue) {
 		this.issue = issue;
 		view.getTaskName().setText(issue.getTaskName());
 		view.getTaskReporter().setText(issue.getTaskReporter());
 		view.getStars().setValue(issue.getStars());
-		return view.getWidget();
+		return view;
+	}
+
+	public BaseView getView() {
+		return view;
 	}
 
 }

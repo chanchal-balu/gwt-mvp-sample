@@ -8,6 +8,7 @@ import com.enunes.bit.client.IssueEditPresenterImpl;
 import com.enunes.bit.client.IssueEditWidget;
 import com.enunes.bit.client.MainPresenter;
 import com.enunes.bit.client.MainPresenterImpl;
+import com.enunes.bit.client.MainWidget;
 import com.enunes.bit.client.MenuPresenter;
 import com.enunes.bit.client.MenuPresenterImpl;
 import com.enunes.bit.client.MenuWidget;
@@ -37,6 +38,7 @@ public class AppModule extends AbstractGinModule {
 		bind(MenuPresenter.View.class).to(MenuWidget.class);
 
 		bind(MainPresenter.class).to(MainPresenterImpl.class);
+		bind(MainPresenter.View.class).to(MainWidget.class);
 
 	}
 

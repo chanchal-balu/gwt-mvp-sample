@@ -3,7 +3,7 @@
  */
 package com.enunes.bit.client;
 
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -28,13 +28,12 @@ public class MenuWidget extends Composite implements MenuPresenter.View {
 
 	}
 
-	@Override
 	public Widget getWidget() {
 		return this;
 	}
 
-	public void addClickHandler(ClickHandler handler) {
-		addIssueButton.addClickHandler(handler);
+	public HasClickHandlers getAddIssueClickHandlers() {
+		return addIssueButton;
 	}
 
 }

@@ -15,8 +15,6 @@ import com.enunes.bit.client.event.IssueUpdatedEvent;
 import com.enunes.bit.client.event.IssueUpdatedHandler;
 import com.enunes.bit.client.model.Issue;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.ui.HasWidgets;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
@@ -26,19 +24,18 @@ import com.google.inject.Provider;
  */
 public class MainPresenterImpl implements MainPresenter {
 
+	private final View view;
 	private final MenuPresenter menuPresenter;
 	private final Provider<IssueDisplayPresenter> displayPresenter;
 	private final Provider<IssueEditPresenter> editPresenter;
-	private HasWidgets container;
-	private Widget editWidget;
-	private Widget displayWidget;
 
 	@Inject
-	public MainPresenterImpl(HandlerManager eventBus,
+	public MainPresenterImpl(HandlerManager eventBus, View view,
 			MenuPresenter menuPresenter,
 			Provider<IssueDisplayPresenter> displayPresenter,
 			Provider<IssueEditPresenter> editPresenter) {
 
+		this.view = view;
 		this.menuPresenter = menuPresenter;
 		this.displayPresenter = displayPresenter;
 		this.editPresenter = editPresenter;
@@ -86,53 +83,40 @@ public class MainPresenterImpl implements MainPresenter {
 	}
 
 	private void doIssueUpdated(Issue issue) {
-		removeEditWidget();
-		displayWidget = displayPresenter.get().showIssue(issue);
-		container.add(displayWidget);
+		BaseView displayView = displayPresenter.get().showIssue(issue);
+		view.addContent(displayView);
 	}
 
 	private void doIssueEditCanceled(Issue issue) {
-		removeEditWidget();
 		if (issue != null) {
-			displayWidget = displayPresenter.get().showIssue(issue);
-			container.add(displayWidget);
+			BaseView displayView = displayPresenter.get().showIssue(issue);
+			view.addContent(displayView);
+		} else {
+			view.removeContent();
 		}
 	}
 
 	private void doAddNewIssue() {
-		removeDisplayWidget();
-		removeEditWidget();
-		editWidget = editPresenter.get().createIssue();
-		container.add(editWidget);
+		BaseView editView = editPresenter.get().createIssue();
+		view.addContent(editView);
 	}
 
 	private void doIssueRemoved() {
-		removeDisplayWidget();
+		view.removeContent();
 	}
 
 	private void doIssueEdit(Issue issue) {
-		removeDisplayWidget();
-		editWidget = editPresenter.get().editIssue(issue);
-		container.add(editWidget);
+		BaseView editView = editPresenter.get().editIssue(issue);
+		view.addContent(editView);
 	}
 
-	private void removeDisplayWidget() {
-		if (displayWidget != null) {
-			container.remove(displayWidget);
-			displayWidget = null;
-		}
+	public View go() {
+		view.addMenu(menuPresenter.showMenu());
+		return view;
 	}
 
-	private void removeEditWidget() {
-		if (editWidget != null) {
-			container.remove(editWidget);
-			editWidget = null;
-		}
-	}
-
-	public void go(HasWidgets container) {
-		this.container = container;
-		container.add(menuPresenter.showMenu());
+	public BaseView getView() {
+		return view;
 	}
 
 }

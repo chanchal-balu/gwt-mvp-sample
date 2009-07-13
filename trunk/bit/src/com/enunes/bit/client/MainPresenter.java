@@ -3,14 +3,22 @@
  */
 package com.enunes.bit.client;
 
-import com.google.gwt.user.client.ui.HasWidgets;
-
 /**
  * @author esnunes@gmail.com (Eduardo S. Nunes)
  * 
  */
-public interface MainPresenter {
+public interface MainPresenter extends BasePresenter {
 
-	void go(HasWidgets container);
+	interface View extends BaseView {
+
+		void addMenu(BaseView view);
+
+		void addContent(BaseView view);
+
+		void removeContent();
+
+	}
+
+	View go();
 
 }

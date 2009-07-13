@@ -5,6 +5,7 @@ package com.enunes.bit.client;
 
 import com.enunes.bit.client.extra.StarsWidget;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -94,10 +95,6 @@ public class IssueEditWidget extends Composite implements
 		return this;
 	}
 
-	public void addCancelClickHandler(ClickHandler handler) {
-		cancelButton.addClickHandler(handler);
-	}
-
 	public void addSaveClickHandler(ClickHandler handler) {
 		saveButton.addClickHandler(handler);
 	}
@@ -112,6 +109,14 @@ public class IssueEditWidget extends Composite implements
 
 	public HasText getTaskReporter() {
 		return taskReporter;
+	}
+
+	public HasClickHandlers getCancelClickHandlers() {
+		return cancelButton;
+	}
+
+	public HasClickHandlers getSaveClickHandlers() {
+		return saveButton;
 	}
 
 }

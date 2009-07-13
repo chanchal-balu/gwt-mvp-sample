@@ -3,23 +3,20 @@
  */
 package com.enunes.bit.client;
 
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 
 /**
  * @author esnunes@gmail.com (Eduardo S. Nunes)
  * 
  */
-public interface MenuPresenter {
+public interface MenuPresenter extends BasePresenter {
 
-	interface View {
+	interface View extends BaseView {
 
-		void addClickHandler(ClickHandler handler);
-
-		Widget getWidget();
+		HasClickHandlers getAddIssueClickHandlers();
 
 	}
 
-	Widget showMenu();
+	View showMenu();
 
 }

@@ -7,7 +7,6 @@ import com.enunes.bit.client.event.AddNewIssueEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.HandlerManager;
-import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
 /**
@@ -23,7 +22,7 @@ public class MenuPresenterImpl implements MenuPresenter {
 
 		this.view = view;
 
-		view.addClickHandler(new ClickHandler() {
+		view.getAddIssueClickHandlers().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				eventBus.fireEvent(new AddNewIssueEvent());
 			}
@@ -31,8 +30,12 @@ public class MenuPresenterImpl implements MenuPresenter {
 
 	}
 
-	public Widget showMenu() {
-		return view.getWidget();
+	public View showMenu() {
+		return view;
+	}
+
+	public BaseView getView() {
+		return view;
 	}
 
 }
