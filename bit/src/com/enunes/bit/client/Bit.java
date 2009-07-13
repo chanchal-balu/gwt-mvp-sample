@@ -28,7 +28,7 @@ public class Bit implements EntryPoint {
 
 		final MainPresenter mainPresenter = ginjector.getMainPresenter();
 
-		mainPresenter.go(RootPanel.get());
+		RootPanel.get().add(mainPresenter.go().getWidget());
 
 		logEvent(ginjector.getEventBus());
 

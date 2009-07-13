@@ -4,24 +4,21 @@
 package com.enunes.bit.client;
 
 import com.enunes.bit.client.model.Issue;
-import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.HasText;
 import com.google.gwt.user.client.ui.HasValue;
-import com.google.gwt.user.client.ui.Widget;
 
 /**
  * @author esnunes@gmail.com (Eduardo S. Nunes)
  * 
  */
-public interface IssueEditPresenter {
+public interface IssueEditPresenter extends BasePresenter {
 
-	interface View {
+	interface View extends BaseView {
 
-		Widget getWidget();
+		HasClickHandlers getSaveClickHandlers();
 
-		void addSaveClickHandler(ClickHandler handler);
-
-		void addCancelClickHandler(ClickHandler handler);
+		HasClickHandlers getCancelClickHandlers();
 
 		HasText getTaskName();
 
@@ -34,11 +31,11 @@ public interface IssueEditPresenter {
 	/**
 	 * Creates a new Issue
 	 */
-	Widget createIssue();
+	View createIssue();
 
 	/**
 	 * Edits an Issue
 	 */
-	Widget editIssue(Issue issue);
+	View editIssue(Issue issue);
 
 }
