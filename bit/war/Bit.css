@@ -5,6 +5,10 @@ html,body,* {
 	font-size: 12px !important;
 }
 
+.main {
+	width: 100%;
+}
+
 .menu {
 	border-bottom: 1px solid #CCC;
 	padding-top: 10px;

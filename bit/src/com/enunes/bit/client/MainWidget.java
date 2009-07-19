@@ -12,6 +12,7 @@ public class MainWidget extends Composite implements MainPresenter.View {
 	public MainWidget() {
 
 		panel = new DockPanel();
+		panel.setStyleName("main");
 		initWidget(panel);
 
 	}
