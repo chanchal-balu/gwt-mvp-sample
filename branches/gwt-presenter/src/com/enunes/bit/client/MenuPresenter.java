@@ -21,43 +21,44 @@ import com.google.inject.Inject;
  */
 public class MenuPresenter extends WidgetPresenter<MenuPresenter.Display> {
 
-	public interface Display extends WidgetDisplay {
+    public interface Display extends WidgetDisplay {
 
-		HasClickHandlers getAddIssueClickHandlers();
+        HasClickHandlers getAddIssueClickHandlers();
 
-	}
+    }
 
-	@Inject
-	public MenuPresenter(Display display, EventBus eventBus) {
-		super(display, eventBus);
-	}
+    @Inject
+    public MenuPresenter(Display display, EventBus eventBus) {
+        super(display, eventBus);
+    }
 
-	@Override
-	public Place getPlace() {
-		return null;
-	}
+    @Override
+    public Place getPlace() {
+        return null;
+    }
 
-	@Override
-	protected void onBind() {
-		display.getAddIssueClickHandlers().addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				eventBus.fireEvent(new AddNewIssueEvent());
-			}
-		});
-	}
+    @Override
+    protected void onBind() {
+        registerHandler(display.getAddIssueClickHandlers().addClickHandler(
+                new ClickHandler() {
+                    public void onClick(ClickEvent event) {
+                        eventBus.fireEvent(new AddNewIssueEvent());
+                    }
+                }));
+    }
 
-	@Override
-	protected void onPlaceRequest(PlaceRequest request) {
-	}
+    @Override
+    protected void onPlaceRequest(PlaceRequest request) {
+    }
 
-	@Override
-	protected void onUnbind() {
-	}
+    @Override
+    protected void onUnbind() {
+    }
 
-	public void refreshDisplay() {
-	}
+    public void refreshDisplay() {
+    }
 
-	public void revealDisplay() {
-	}
+    public void revealDisplay() {
+    }
 
 }

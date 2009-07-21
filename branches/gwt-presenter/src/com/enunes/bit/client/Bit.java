@@ -15,6 +15,9 @@ import com.enunes.bit.client.event.IssueUpdatedHandler;
 import com.enunes.bit.client.gin.AppGinjector;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
@@ -34,6 +37,12 @@ public class Bit implements EntryPoint {
         RootPanel.get().add(mainPresenter.getDisplay().asWidget());
 
         logEvent(ginjector.getEventBus());
+
+        RootPanel.get().add(new Button("exit", new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                mainPresenter.unbind();
+            }
+        }));
 
     }
 

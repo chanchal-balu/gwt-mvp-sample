@@ -22,107 +22,112 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 public class IssueEditWidget extends Composite implements
-		IssueEditPresenter.Display {
+        IssueEditPresenter.Display {
 
-	private final Panel panel;
-	private final TextBox taskName;
-	private final TextBox taskReporter;
-	private final StarsWidget stars;
-	private final Button saveButton;
-	private final Button cancelButton;
+    private final Panel panel;
 
-	public IssueEditWidget() {
+    private final TextBox taskName;
 
-		panel = new FlowPanel();
-		panel.setStyleName("issue-edit");
-		initWidget(panel);
+    private final TextBox taskReporter;
 
-		final FlowPanel infoPanel = new FlowPanel();
-		infoPanel.setStyleName("issue-edit-info");
-		panel.add(infoPanel);
+    private final StarsWidget stars;
 
-		taskName = new TextBox();
-		infoPanel.add(createLine("Task", taskName));
+    private final Button saveButton;
 
-		taskReporter = new TextBox();
-		infoPanel.add(createLine("Task reporter", taskReporter));
+    private final Button cancelButton;
 
-		stars = new StarsWidget(5);
-		infoPanel.add(createLine("Rate", stars));
+    public IssueEditWidget() {
 
-		final Panel buttonsPanel = new FlowPanel();
-		buttonsPanel.setStyleName("issue-edit-buttons");
-		panel.add(buttonsPanel);
+        panel = new FlowPanel();
+        panel.setStyleName("issue-edit");
+        initWidget(panel);
 
-		saveButton = new Button("save");
-		buttonsPanel.add(saveButton);
+        final FlowPanel infoPanel = new FlowPanel();
+        infoPanel.setStyleName("issue-edit-info");
+        panel.add(infoPanel);
 
-		cancelButton = new Button("cancel");
-		buttonsPanel.add(cancelButton);
+        taskName = new TextBox();
+        infoPanel.add(createLine("Task", taskName));
 
-	}
+        taskReporter = new TextBox();
+        infoPanel.add(createLine("Task reporter", taskReporter));
 
-	private Widget createLine(String header, Widget value) {
+        stars = new StarsWidget(5);
+        infoPanel.add(createLine("Rate", stars));
 
-		final Panel result = new FlowPanel();
-		result.setStyleName("issue-edit-info-line");
+        final Panel buttonsPanel = new FlowPanel();
+        buttonsPanel.setStyleName("issue-edit-buttons");
+        panel.add(buttonsPanel);
 
-		final Label label = new Label(header);
-		label.setStyleName("issue-edit-info-header");
-		result.add(label);
+        saveButton = new Button("save");
+        buttonsPanel.add(saveButton);
 
-		final SimplePanel valuePanel = new SimplePanel();
-		valuePanel.setStyleName("issue-edit-info-value");
-		valuePanel.setWidget(value);
-		result.add(valuePanel);
+        cancelButton = new Button("cancel");
+        buttonsPanel.add(cancelButton);
 
-		return result;
+    }
 
-	}
+    private Widget createLine(String header, Widget value) {
 
-	@Override
-	protected void onAttach() {
-		super.onAttach();
-		setFocus();
-	}
+        final Panel result = new FlowPanel();
+        result.setStyleName("issue-edit-info-line");
 
-	private void setFocus() {
-		taskName.setFocus(true);
-		taskName.setSelectionRange(0, taskName.getText().length());
-	}
+        final Label label = new Label(header);
+        label.setStyleName("issue-edit-info-header");
+        result.add(label);
 
-	public void addSaveClickHandler(ClickHandler handler) {
-		saveButton.addClickHandler(handler);
-	}
+        final SimplePanel valuePanel = new SimplePanel();
+        valuePanel.setStyleName("issue-edit-info-value");
+        valuePanel.setWidget(value);
+        result.add(valuePanel);
 
-	public HasValue<Integer> getStars() {
-		return stars;
-	}
+        return result;
 
-	public HasText getTaskName() {
-		return taskName;
-	}
+    }
 
-	public HasText getTaskReporter() {
-		return taskReporter;
-	}
+    @Override
+    protected void onAttach() {
+        super.onAttach();
+        setFocus();
+    }
 
-	public HasClickHandlers getCancelClickHandlers() {
-		return cancelButton;
-	}
+    private void setFocus() {
+        taskName.setFocus(true);
+        taskName.setSelectionRange(0, taskName.getText().length());
+    }
 
-	public HasClickHandlers getSaveClickHandlers() {
-		return saveButton;
-	}
+    public void addSaveClickHandler(ClickHandler handler) {
+        saveButton.addClickHandler(handler);
+    }
 
-	public Widget asWidget() {
-		return this;
-	}
+    public HasValue<Integer> getStars() {
+        return stars;
+    }
 
-	public void startProcessing() {
-	}
+    public HasText getTaskName() {
+        return taskName;
+    }
 
-	public void stopProcessing() {
-	}
+    public HasText getTaskReporter() {
+        return taskReporter;
+    }
+
+    public HasClickHandlers getCancelClickHandlers() {
+        return cancelButton;
+    }
+
+    public HasClickHandlers getSaveClickHandlers() {
+        return saveButton;
+    }
+
+    public Widget asWidget() {
+        return this;
+    }
+
+    public void startProcessing() {
+    }
+
+    public void stopProcessing() {
+    }
 
 }

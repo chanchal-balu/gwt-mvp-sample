@@ -20,95 +20,100 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 public class IssueDisplayWidget extends Composite implements
-		IssueDisplayPresenter.Display {
+        IssueDisplayPresenter.Display {
 
-	private final Panel panel;
-	private final Label taskName;
-	private final Label taskReporter;
-	private final StarsWidget stars;
-	private final Button editButton;
-	private final Button removeButton;
+    private final Panel panel;
 
-	public IssueDisplayWidget() {
+    private final Label taskName;
 
-		panel = new FlowPanel();
-		panel.setStyleName("issue-display");
-		initWidget(panel);
+    private final Label taskReporter;
 
-		final Panel buttonsPanel = new FlowPanel();
-		buttonsPanel.setStyleName("issue-display-buttons");
-		panel.add(buttonsPanel);
+    private final StarsWidget stars;
 
-		editButton = new Button("E");
-		editButton.setTitle("edit");
-		buttonsPanel.add(editButton);
+    private final Button editButton;
 
-		removeButton = new Button("R");
-		removeButton.setTitle("remove");
-		buttonsPanel.add(removeButton);
+    private final Button removeButton;
 
-		final Panel infoPanel = new FlowPanel();
-		infoPanel.setStyleName("issue-display-info");
-		panel.add(infoPanel);
+    public IssueDisplayWidget() {
 
-		taskName = new Label();
-		infoPanel.add(createLine("Task", taskName));
+        panel = new FlowPanel();
+        panel.setStyleName("issue-display");
+        initWidget(panel);
 
-		taskReporter = new Label();
-		infoPanel.add(createLine("Task reporter", taskReporter));
+        final Panel buttonsPanel = new FlowPanel();
+        buttonsPanel.setStyleName("issue-display-buttons");
+        panel.add(buttonsPanel);
 
-		stars = new StarsWidget(5);
-		stars.setReadOnly(true);
-		infoPanel.add(createLine("Rate", stars));
+        editButton = new Button("E");
+        editButton.setTitle("edit");
+        buttonsPanel.add(editButton);
 
-	}
+        removeButton = new Button("R");
+        removeButton.setTitle("remove");
+        buttonsPanel.add(removeButton);
 
-	private Widget createLine(String header, Widget value) {
+        final Panel infoPanel = new FlowPanel();
+        infoPanel.setStyleName("issue-display-info");
+        panel.add(infoPanel);
 
-		final Panel result = new FlowPanel();
-		result.setStyleName("issue-display-info-line");
+        taskName = new Label();
+        infoPanel.add(createLine("Task", taskName));
 
-		final Label label = new Label(header);
-		label.setStyleName("issue-display-info-header");
-		result.add(label);
+        taskReporter = new Label();
+        infoPanel.add(createLine("Task reporter", taskReporter));
 
-		final SimplePanel valuePanel = new SimplePanel();
-		valuePanel.setStyleName("issue-display-info-value");
-		valuePanel.setWidget(value);
-		result.add(valuePanel);
+        stars = new StarsWidget(5);
+        stars.setReadOnly(true);
+        infoPanel.add(createLine("Rate", stars));
 
-		return result;
+    }
 
-	}
+    private Widget createLine(String header, Widget value) {
 
-	public HasValue<Integer> getStars() {
-		return stars;
-	}
+        final Panel result = new FlowPanel();
+        result.setStyleName("issue-display-info-line");
 
-	public HasText getTaskName() {
-		return taskName;
-	}
+        final Label label = new Label(header);
+        label.setStyleName("issue-display-info-header");
+        result.add(label);
 
-	public HasText getTaskReporter() {
-		return taskReporter;
-	}
+        final SimplePanel valuePanel = new SimplePanel();
+        valuePanel.setStyleName("issue-display-info-value");
+        valuePanel.setWidget(value);
+        result.add(valuePanel);
 
-	public HasClickHandlers getEditClickHandlers() {
-		return editButton;
-	}
+        return result;
 
-	public HasClickHandlers getRemoveClickHandlers() {
-		return removeButton;
-	}
+    }
 
-	public Widget asWidget() {
-		return this;
-	}
+    public HasValue<Integer> getStars() {
+        return stars;
+    }
 
-	public void startProcessing() {
-	}
+    public HasText getTaskName() {
+        return taskName;
+    }
 
-	public void stopProcessing() {
-	}
+    public HasText getTaskReporter() {
+        return taskReporter;
+    }
+
+    public HasClickHandlers getEditClickHandlers() {
+        return editButton;
+    }
+
+    public HasClickHandlers getRemoveClickHandlers() {
+        return removeButton;
+    }
+
+    public Widget asWidget() {
+        return this;
+    }
+
+    public void startProcessing() {
+    }
+
+    public void stopProcessing() {
+    }
 
 }

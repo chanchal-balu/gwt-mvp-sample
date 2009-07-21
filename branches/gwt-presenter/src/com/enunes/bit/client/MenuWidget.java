@@ -15,31 +15,31 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class MenuWidget extends Composite implements MenuPresenter.Display {
 
-	private final Button addIssueButton;
+    private final Button addIssueButton;
 
-	public MenuWidget() {
+    public MenuWidget() {
 
-		final FlowPanel panel = new FlowPanel();
-		panel.setStyleName("menu");
-		initWidget(panel);
+        final FlowPanel panel = new FlowPanel();
+        panel.setStyleName("menu");
+        initWidget(panel);
 
-		addIssueButton = new Button("add issue");
-		panel.add(addIssueButton);
+        addIssueButton = new Button("add issue");
+        panel.add(addIssueButton);
 
-	}
+    }
 
-	public HasClickHandlers getAddIssueClickHandlers() {
-		return addIssueButton;
-	}
+    public HasClickHandlers getAddIssueClickHandlers() {
+        return addIssueButton;
+    }
 
-	public Widget asWidget() {
-		return this;
-	}
+    public Widget asWidget() {
+        return this;
+    }
 
-	public void startProcessing() {
-	}
+    public void startProcessing() {
+    }
 
-	public void stopProcessing() {
-	}
+    public void stopProcessing() {
+    }
 
 }
