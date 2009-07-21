@@ -43,6 +43,7 @@ public class StarsWidget extends Widget implements HasValue<Integer> {
         final Element spanTrick = DOM.createSpan();
         spanTrick.getStyle().setProperty("display", "block");
         spanTrick.getStyle().setProperty("clear", "both");
+        spanTrick.getStyle().setProperty("height", "0px");
         spanTrick.setInnerHTML("<!-- -->");
         divElement.appendChild(spanTrick);
 
