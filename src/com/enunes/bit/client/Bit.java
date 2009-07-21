@@ -23,50 +23,50 @@ import com.google.gwt.user.client.ui.RootPanel;
  */
 public class Bit implements EntryPoint {
 
-	public void onModuleLoad() {
+    public void onModuleLoad() {
 
-		final AppGinjector ginjector = GWT.create(AppGinjector.class);
+        final AppGinjector ginjector = GWT.create(AppGinjector.class);
 
-		final MainPresenter mainPresenter = ginjector.getMainPresenter();
-		mainPresenter.bind();
-		mainPresenter.revealDisplay();
+        final MainPresenter mainPresenter = ginjector.getMainPresenter();
+        mainPresenter.bind();
+        mainPresenter.revealDisplay();
 
-		RootPanel.get().add(mainPresenter.getDisplay().asWidget());
+        RootPanel.get().add(mainPresenter.getDisplay().asWidget());
 
-		logEvent(ginjector.getEventBus());
+        logEvent(ginjector.getEventBus());
 
-	}
+    }
 
-	private void logEvent(final EventBus eventBus) {
-		eventBus.addHandler(IssueEditEvent.getType(), new IssueEditHandler() {
-			public void onIssueEdit(IssueEditEvent event) {
-				GWT.log(event.toDebugString(), null);
-			}
-		});
-		eventBus.addHandler(IssueRemovedEvent.getType(),
-				new IssueRemovedHandler() {
-					public void onIssueRemoved(IssueRemovedEvent event) {
-						GWT.log(event.toDebugString(), null);
-					}
-				});
-		eventBus.addHandler(AddNewIssueEvent.getType(),
-				new AddNewIssueHandler() {
-					public void onAddNewIssue(AddNewIssueEvent event) {
-						GWT.log(event.toDebugString(), null);
-					}
-				});
-		eventBus.addHandler(IssueEditCanceledEvent.getType(),
-				new IssueEditCanceledHandler() {
-					public void onIssueEditCanceled(IssueEditCanceledEvent event) {
-						GWT.log(event.toDebugString(), null);
-					}
-				});
-		eventBus.addHandler(IssueUpdatedEvent.getType(),
-				new IssueUpdatedHandler() {
-					public void onIssueUpdated(IssueUpdatedEvent event) {
-						GWT.log(event.toDebugString(), null);
-					}
-				});
-	}
+    private void logEvent(final EventBus eventBus) {
+        eventBus.addHandler(IssueEditEvent.getType(), new IssueEditHandler() {
+            public void onIssueEdit(IssueEditEvent event) {
+                GWT.log(event.toDebugString(), null);
+            }
+        });
+        eventBus.addHandler(IssueRemovedEvent.getType(),
+                new IssueRemovedHandler() {
+                    public void onIssueRemoved(IssueRemovedEvent event) {
+                        GWT.log(event.toDebugString(), null);
+                    }
+                });
+        eventBus.addHandler(AddNewIssueEvent.getType(),
+                new AddNewIssueHandler() {
+                    public void onAddNewIssue(AddNewIssueEvent event) {
+                        GWT.log(event.toDebugString(), null);
+                    }
+                });
+        eventBus.addHandler(IssueEditCanceledEvent.getType(),
+                new IssueEditCanceledHandler() {
+                    public void onIssueEditCanceled(IssueEditCanceledEvent event) {
+                        GWT.log(event.toDebugString(), null);
+                    }
+                });
+        eventBus.addHandler(IssueUpdatedEvent.getType(),
+                new IssueUpdatedHandler() {
+                    public void onIssueUpdated(IssueUpdatedEvent event) {
+                        GWT.log(event.toDebugString(), null);
+                    }
+                });
+    }
 
 }

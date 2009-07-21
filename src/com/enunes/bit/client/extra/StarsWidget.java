@@ -15,121 +15,126 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class StarsWidget extends Widget implements HasValue<Integer> {
 
-	private final int count;
-	private final Element[] liElements;
-	private final Element[] aElements;
-	private boolean readOnly = false;
-	private Integer value;
+    private final int count;
 
-	public StarsWidget(final int count) {
+    private final Element[] liElements;
 
-		this.count = count;
+    private final Element[] aElements;
 
-		liElements = new Element[count];
-		aElements = new Element[count];
+    private boolean readOnly = false;
 
-		final Element divElement = DOM.createDiv();
-		divElement.setClassName("gwt-StarsWidget");
+    private Integer value;
 
-		final Element ulElement = DOM.createElement("ul");
-		divElement.appendChild(ulElement);
+    public StarsWidget(final int count) {
 
-		final Element spanTrick = DOM.createSpan();
-		spanTrick.getStyle().setProperty("display", "block");
-		spanTrick.getStyle().setProperty("clear", "both");
-		spanTrick.setInnerHTML("<!-- -->");
-		divElement.appendChild(spanTrick);
+        this.count = count;
 
-		value = 0;
+        liElements = new Element[count];
+        aElements = new Element[count];
 
-		setElement(divElement);
+        final Element divElement = DOM.createDiv();
+        setElement(divElement);
+        
+        divElement.setClassName("gwt-StarsWidget");
 
-		for (int i = 0; i < count; i++) {
-			final Element li = DOM.createElement("li");
-			final Element a = DOM.createAnchor();
-			a.setAttribute("href", "javascript:;");
-			li.appendChild(a);
-			liElements[i] = li;
-			aElements[i] = a;
-			DOM.sinkEvents(a, Event.ONCLICK);
-			ulElement.appendChild(li);
-		}
+        final Element ulElement = DOM.createElement("ul");
+        divElement.appendChild(ulElement);
 
-		render();
+        final Element spanTrick = DOM.createSpan();
+        spanTrick.getStyle().setProperty("display", "block");
+        spanTrick.getStyle().setProperty("clear", "both");
+        spanTrick.setInnerHTML("<!-- -->");
+        divElement.appendChild(spanTrick);
 
-	}
+        value = 0;
 
-	@Override
-	public void onBrowserEvent(Event event) {
+        for (int i = 0; i < count; i++) {
+            final Element li = DOM.createElement("li");
+            final Element a = DOM.createAnchor();
+            a.setAttribute("href", "javascript:;");
+            li.appendChild(a);
+            liElements[i] = li;
+            aElements[i] = a;
+            DOM.sinkEvents(a, Event.ONCLICK);
+            ulElement.appendChild(li);
+        }
 
-		final com.google.gwt.dom.client.Element target = Element.as(event
-				.getEventTarget());
+        render();
 
-		for (int i = 0; i < count; i++) {
-			if (aElements[i] == target) {
-				onStarClicked(i);
-				break;
-			}
-		}
+    }
 
-	}
+    @Override
+    public void onBrowserEvent(Event event) {
 
-	protected void onStarClicked(int i) {
-		if (i == value - 1) {
-			setValue(0, true);
-		} else {
-			setValue(i + 1, true);
-		}
-	}
+        final com.google.gwt.dom.client.Element target = Element.as(event.getEventTarget());
 
-	private void render() {
+        for (int i = 0; i < count; i++) {
+            if (aElements[i] == target) {
+                onStarClicked(i);
+                break;
+            }
+        }
 
-		for (int i = 0; i < count; i++) {
-			if (i <= value - 1) {
-				liElements[i].getStyle().setProperty("backgroundPosition", "0 -16px");
-			} else {
-				liElements[i].getStyle().setProperty("backgroundPosition", "0 0");
-			}
-			if (readOnly) {
-				aElements[i].getStyle().setProperty("display", "none");
-			} else {
-				aElements[i].getStyle().setProperty("display", "block");
-			}
-		}
-		
-	}
+    }
 
-	public boolean getReadOnly() {
-		return readOnly;
-	}
+    protected void onStarClicked(int i) {
+        if (i == value - 1) {
+            setValue(0, true);
+        } else {
+            setValue(i + 1, true);
+        }
+    }
 
-	public void setReadOnly(boolean readOnly) {
-		this.readOnly = readOnly;
-		render();
-	}
+    private void render() {
 
-	public Integer getValue() {
-		return value;
-	}
+        for (int i = 0; i < count; i++) {
+            if (i <= value - 1) {
+                liElements[i].getStyle().setProperty("backgroundPosition",
+                        "0 -16px");
+            } else {
+                liElements[i].getStyle().setProperty("backgroundPosition",
+                        "0 0");
+            }
+            if (readOnly) {
+                aElements[i].getStyle().setProperty("display", "none");
+            } else {
+                aElements[i].getStyle().setProperty("display", "block");
+            }
+        }
 
-	public void setValue(Integer value) {
-		setValue(value, true);
-	}
+    }
 
-	public void setValue(Integer value, boolean fireEvents) {
+    public boolean getReadOnly() {
+        return readOnly;
+    }
 
-		if (this.value.compareTo(value) != 0) {
-			final Integer oldValue = this.value;
-			this.value = value;
-			render();
-			ValueChangeEvent.<Integer> fireIfNotEqual(this, oldValue, value);
-		}
+    public void setReadOnly(boolean readOnly) {
+        this.readOnly = readOnly;
+        render();
+    }
 
-	}
+    public Integer getValue() {
+        return value;
+    }
 
-	public HandlerRegistration addValueChangeHandler(
-			ValueChangeHandler<Integer> handler) {
-		return addHandler(handler, ValueChangeEvent.getType());
-	}
+    public void setValue(Integer value) {
+        setValue(value, true);
+    }
+
+    public void setValue(Integer value, boolean fireEvents) {
+
+        if (this.value.compareTo(value) != 0) {
+            final Integer oldValue = this.value;
+            this.value = value;
+            render();
+            ValueChangeEvent.<Integer> fireIfNotEqual(this, oldValue, value);
+        }
+
+    }
+
+    public HandlerRegistration addValueChangeHandler(
+            ValueChangeHandler<Integer> handler) {
+        return addHandler(handler, ValueChangeEvent.getType());
+    }
 
 }

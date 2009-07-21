@@ -8,41 +8,42 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class MainWidget extends Composite implements MainPresenter.Display {
 
-	private final DockPanel panel;
-	private Widget content;
+    private final DockPanel panel;
 
-	public MainWidget() {
+    private Widget content;
 
-		panel = new DockPanel();
-		panel.setStyleName("main");
-		initWidget(panel);
+    public MainWidget() {
 
-	}
+        panel = new DockPanel();
+        panel.setStyleName("main");
+        initWidget(panel);
 
-	public void removeContent() {
-		if (content != null) {
-			panel.remove(content);
-		}
-	}
+    }
 
-	public void addContent(WidgetDisplay display) {
-		removeContent();
-		content = display.asWidget();
-		panel.add(content, DockPanel.CENTER);
-	}
+    public void removeContent() {
+        if (content != null) {
+            panel.remove(content);
+        }
+    }
 
-	public void addMenu(WidgetDisplay display) {
-		panel.add(display.asWidget(), DockPanel.NORTH);
-	}
+    public void addContent(WidgetDisplay display) {
+        removeContent();
+        content = display.asWidget();
+        panel.add(content, DockPanel.CENTER);
+    }
 
-	public Widget asWidget() {
-		return this;
-	}
+    public void addMenu(WidgetDisplay display) {
+        panel.add(display.asWidget(), DockPanel.NORTH);
+    }
 
-	public void startProcessing() {
-	}
+    public Widget asWidget() {
+        return this;
+    }
 
-	public void stopProcessing() {
-	}
+    public void startProcessing() {
+    }
+
+    public void stopProcessing() {
+    }
 
 }
