@@ -1,5 +1,7 @@
 package com.enunes.bit.client;
 
+import net.customware.gwt.presenter.client.EventBus;
+
 import com.enunes.bit.client.event.AddNewIssueEvent;
 import com.enunes.bit.client.event.AddNewIssueHandler;
 import com.enunes.bit.client.event.IssueEditCanceledEvent;
@@ -13,7 +15,6 @@ import com.enunes.bit.client.event.IssueUpdatedHandler;
 import com.enunes.bit.client.gin.AppGinjector;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.RootPanel;
 
 /**
@@ -27,14 +28,16 @@ public class Bit implements EntryPoint {
 		final AppGinjector ginjector = GWT.create(AppGinjector.class);
 
 		final MainPresenter mainPresenter = ginjector.getMainPresenter();
+		mainPresenter.bind();
+		mainPresenter.revealDisplay();
 
-		RootPanel.get().add(mainPresenter.go().getWidget());
+		RootPanel.get().add(mainPresenter.getDisplay().asWidget());
 
 		logEvent(ginjector.getEventBus());
 
 	}
 
-	private void logEvent(final HandlerManager eventBus) {
+	private void logEvent(final EventBus eventBus) {
 		eventBus.addHandler(IssueEditEvent.getType(), new IssueEditHandler() {
 			public void onIssueEdit(IssueEditEvent event) {
 				GWT.log(event.toDebugString(), null);

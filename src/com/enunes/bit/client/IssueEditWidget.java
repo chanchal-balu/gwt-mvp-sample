@@ -22,7 +22,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 public class IssueEditWidget extends Composite implements
-		IssueEditPresenter.View {
+		IssueEditPresenter.Display {
 
 	private final Panel panel;
 	private final TextBox taskName;
@@ -91,10 +91,6 @@ public class IssueEditWidget extends Composite implements
 		taskName.setSelectionRange(0, taskName.getText().length());
 	}
 
-	public Widget getWidget() {
-		return this;
-	}
-
 	public void addSaveClickHandler(ClickHandler handler) {
 		saveButton.addClickHandler(handler);
 	}
@@ -117,6 +113,16 @@ public class IssueEditWidget extends Composite implements
 
 	public HasClickHandlers getSaveClickHandlers() {
 		return saveButton;
+	}
+
+	public Widget asWidget() {
+		return this;
+	}
+
+	public void startProcessing() {
+	}
+
+	public void stopProcessing() {
 	}
 
 }

@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.Widget;
  * @author esnunes@gmail.com (Eduardo S. Nunes)
  * 
  */
-public class MenuWidget extends Composite implements MenuPresenter.View {
+public class MenuWidget extends Composite implements MenuPresenter.Display {
 
 	private final Button addIssueButton;
 
@@ -28,12 +28,18 @@ public class MenuWidget extends Composite implements MenuPresenter.View {
 
 	}
 
-	public Widget getWidget() {
+	public HasClickHandlers getAddIssueClickHandlers() {
+		return addIssueButton;
+	}
+
+	public Widget asWidget() {
 		return this;
 	}
 
-	public HasClickHandlers getAddIssueClickHandlers() {
-		return addIssueButton;
+	public void startProcessing() {
+	}
+
+	public void stopProcessing() {
 	}
 
 }
