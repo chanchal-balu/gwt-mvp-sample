@@ -24,69 +24,72 @@ import com.google.inject.Inject;
  * 
  */
 public class IssueDisplayPresenter extends
-		WidgetPresenter<IssueDisplayPresenter.Display> {
+        WidgetPresenter<IssueDisplayPresenter.Display> {
 
-	public interface Display extends WidgetDisplay {
+    public interface Display extends WidgetDisplay {
 
-		HasClickHandlers getEditClickHandlers();
+        HasClickHandlers getEditClickHandlers();
 
-		HasClickHandlers getRemoveClickHandlers();
+        HasClickHandlers getRemoveClickHandlers();
 
-		HasText getTaskName();
+        HasText getTaskName();
 
-		HasText getTaskReporter();
+        HasText getTaskReporter();
 
-		HasValue<Integer> getStars();
+        HasValue<Integer> getStars();
 
-	}
+    }
 
-	private Issue issue;
+    private Issue issue;
 
-	@Inject
-	public IssueDisplayPresenter(Display display, EventBus eventBus) {
-		super(display, eventBus);
-	}
+    @Inject
+    public IssueDisplayPresenter(Display display, EventBus eventBus) {
+        super(display, eventBus);
+    }
 
-	@Override
-	public Place getPlace() {
-		return null;
-	}
+    @Override
+    public Place getPlace() {
+        return null;
+    }
 
-	@Override
-	protected void onBind() {
-		display.getEditClickHandlers().addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				eventBus.fireEvent(new IssueEditEvent(issue));
-			}
-		});
+    @Override
+    protected void onBind() {
 
-		display.getRemoveClickHandlers().addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				// TODO: remove it from database
-				eventBus.fireEvent(new IssueRemovedEvent());
-			}
-		});
-	}
+        registerHandler(display.getEditClickHandlers().addClickHandler(
+                new ClickHandler() {
+                    public void onClick(ClickEvent event) {
+                        eventBus.fireEvent(new IssueEditEvent(issue));
+                    }
+                }));
 
-	public void showIssue(Issue issue) {
-		this.issue = issue;
-		display.getTaskName().setText(issue.getTaskName());
-		display.getTaskReporter().setText(issue.getTaskReporter());
-		display.getStars().setValue(issue.getStars());
-	}
+        registerHandler(display.getRemoveClickHandlers().addClickHandler(
+                new ClickHandler() {
+                    public void onClick(ClickEvent event) {
+                        eventBus.fireEvent(new IssueRemovedEvent());
+                    }
+                }));
 
-	@Override
-	protected void onPlaceRequest(PlaceRequest request) {
-	}
+    }
 
-	@Override
-	protected void onUnbind() {
-	}
+    public void showIssue(Issue issue) {
+        this.issue = issue;
+        display.getTaskName().setText(issue.getTaskName());
+        display.getTaskReporter().setText(issue.getTaskReporter());
+        display.getStars().setValue(issue.getStars());
+    }
 
-	public void refreshDisplay() {
-	}
+    @Override
+    protected void onPlaceRequest(PlaceRequest request) {
+    }
 
-	public void revealDisplay() {
-	}
+    @Override
+    protected void onUnbind() {
+    }
+
+    public void refreshDisplay() {
+    }
+
+    public void revealDisplay() {
+    }
 
 }

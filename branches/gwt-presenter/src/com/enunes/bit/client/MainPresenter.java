@@ -29,123 +29,153 @@ import com.google.inject.Provider;
  */
 public class MainPresenter extends WidgetPresenter<MainPresenter.Display> {
 
-	public interface Display extends WidgetDisplay {
+    public interface Display extends WidgetDisplay {
 
-		void addMenu(WidgetDisplay display);
+        void addMenu(WidgetDisplay display);
 
-		void addContent(WidgetDisplay display);
+        void addContent(WidgetDisplay display);
 
-		void removeContent();
+        void removeContent();
 
-	}
+    }
 
-	private final MenuPresenter menuPresenter;
-	private final Provider<IssueEditPresenter> editPresenter;
-	private final Provider<IssueDisplayPresenter> displayPresenter;
+    private final MenuPresenter menuPresenter;
 
-	@Inject
-	public MainPresenter(Display display, EventBus eventBus,
-			MenuPresenter menuPresenter,
-			Provider<IssueEditPresenter> editPresenter,
-			Provider<IssueDisplayPresenter> displayPresenter) {
-		super(display, eventBus);
-		this.menuPresenter = menuPresenter;
-		this.editPresenter = editPresenter;
-		this.displayPresenter = displayPresenter;
-	}
+    private final Provider<IssueEditPresenter> editPresenterProvider;
 
-	@Override
-	public Place getPlace() {
-		return null;
-	}
+    private final Provider<IssueDisplayPresenter> displayPresenterProvider;
 
-	@Override
-	protected void onBind() {
-		menuPresenter.bind();
-		eventBus.addHandler(AddNewIssueEvent.getType(),
-				new AddNewIssueHandler() {
-					public void onAddNewIssue(AddNewIssueEvent event) {
-						doAddNewIssue();
-					}
-				});
+    private IssueEditPresenter editPresenter;
 
-		eventBus.addHandler(IssueEditEvent.getType(), new IssueEditHandler() {
-			public void onIssueEdit(IssueEditEvent event) {
-				doIssueEdit(event.getIssue());
-			}
-		});
+    private IssueDisplayPresenter displayPresenter;
 
-		eventBus.addHandler(IssueRemovedEvent.getType(),
-				new IssueRemovedHandler() {
-					public void onIssueRemoved(IssueRemovedEvent event) {
-						doIssueRemoved();
-					}
-				});
+    @Inject
+    public MainPresenter(Display display, EventBus eventBus,
+            MenuPresenter menuPresenter,
+            Provider<IssueEditPresenter> editPresenter,
+            Provider<IssueDisplayPresenter> displayPresenter) {
+        super(display, eventBus);
+        this.menuPresenter = menuPresenter;
+        this.editPresenterProvider = editPresenter;
+        this.displayPresenterProvider = displayPresenter;
+    }
 
-		eventBus.addHandler(IssueEditCanceledEvent.getType(),
-				new IssueEditCanceledHandler() {
-					public void onIssueEditCanceled(IssueEditCanceledEvent event) {
-						doIssueEditCanceled(event.getIssue());
-					}
-				});
+    @Override
+    public Place getPlace() {
+        return null;
+    }
 
-		eventBus.addHandler(IssueUpdatedEvent.getType(),
-				new IssueUpdatedHandler() {
-					public void onIssueUpdated(IssueUpdatedEvent event) {
-						doIssueUpdated(event.getIssue());
-					}
-				});
-	}
+    @Override
+    protected void onBind() {
 
-	private void doIssueUpdated(Issue issue) {
-		final IssueDisplayPresenter presenter = displayPresenter.get();
-		presenter.bind();
-		presenter.showIssue(issue);
-		display.addContent(presenter.getDisplay());
-	}
+        menuPresenter.bind();
 
-	private void doIssueEditCanceled(Issue issue) {
-		if (issue != null) {
-			final IssueDisplayPresenter presenter = displayPresenter.get();
-			presenter.bind();
-			presenter.showIssue(issue);
-			display.addContent(presenter.getDisplay());
-		} else {
-			display.removeContent();
-		}
-	}
+        registerHandler(eventBus.addHandler(AddNewIssueEvent.getType(),
+                new AddNewIssueHandler() {
+                    public void onAddNewIssue(AddNewIssueEvent event) {
+                        doAddNewIssue();
+                    }
+                }));
 
-	private void doAddNewIssue() {
-		IssueEditPresenter presenter = editPresenter.get();
-		presenter.createIssue();
-		presenter.bind();
-		display.addContent(presenter.getDisplay());
-	}
+        registerHandler(eventBus.addHandler(IssueEditEvent.getType(),
+                new IssueEditHandler() {
+                    public void onIssueEdit(IssueEditEvent event) {
+                        doIssueEdit(event.getIssue());
+                    }
+                }));
 
-	private void doIssueRemoved() {
-		display.removeContent();
-	}
+        registerHandler(eventBus.addHandler(IssueRemovedEvent.getType(),
+                new IssueRemovedHandler() {
+                    public void onIssueRemoved(IssueRemovedEvent event) {
+                        doIssueRemoved();
+                    }
+                }));
 
-	private void doIssueEdit(Issue issue) {
-		IssueEditPresenter presenter = editPresenter.get();
-		presenter.editIssue(issue);
-		presenter.bind();
-		display.addContent(presenter.getDisplay());
-	}
+        registerHandler(eventBus.addHandler(IssueEditCanceledEvent.getType(),
+                new IssueEditCanceledHandler() {
+                    public void onIssueEditCanceled(IssueEditCanceledEvent event) {
+                        doIssueEditCanceled(event.getIssue());
+                    }
+                }));
 
-	@Override
-	protected void onPlaceRequest(PlaceRequest request) {
-	}
+        registerHandler(eventBus.addHandler(IssueUpdatedEvent.getType(),
+                new IssueUpdatedHandler() {
+                    public void onIssueUpdated(IssueUpdatedEvent event) {
+                        doIssueUpdated(event.getIssue());
+                    }
+                }));
 
-	@Override
-	protected void onUnbind() {
-	}
+    }
 
-	public void refreshDisplay() {
-	}
+    @Override
+    protected void onUnbind() {
+        menuPresenter.unbind();
+        if (editPresenter != null) {
+            editPresenter.unbind();
+        }
+        if (displayPresenter != null) {
+            displayPresenter.unbind();
+        }
+    }
 
-	public void revealDisplay() {
-		display.addMenu(menuPresenter.getDisplay());
-	}
+    private void doIssueUpdated(Issue issue) {
+        final IssueDisplayPresenter presenter = ensureDisplayPresenter();
+        presenter.showIssue(issue);
+        display.addContent(presenter.getDisplay());
+    }
+
+    private void doIssueEditCanceled(Issue issue) {
+        if (issue != null) {
+            final IssueDisplayPresenter presenter = ensureDisplayPresenter();
+            presenter.showIssue(issue);
+            display.addContent(presenter.getDisplay());
+        } else {
+            display.removeContent();
+        }
+    }
+
+    private void doAddNewIssue() {
+        final IssueEditPresenter presenter = ensureEditPresenter();
+        presenter.createIssue();
+        display.addContent(presenter.getDisplay());
+    }
+
+    private void doIssueRemoved() {
+        display.removeContent();
+    }
+
+    private void doIssueEdit(Issue issue) {
+        final IssueEditPresenter presenter = ensureEditPresenter();
+        presenter.editIssue(issue);
+        display.addContent(presenter.getDisplay());
+    }
+
+    @Override
+    protected void onPlaceRequest(PlaceRequest request) {
+    }
+
+    public void refreshDisplay() {
+    }
+
+    public void revealDisplay() {
+        menuPresenter.revealDisplay();
+        display.addMenu(menuPresenter.getDisplay());
+    }
+
+    private IssueEditPresenter ensureEditPresenter() {
+        if (editPresenter == null) {
+            editPresenter = editPresenterProvider.get();
+            editPresenter.bind();
+        }
+        return editPresenter;
+    }
+
+    private IssueDisplayPresenter ensureDisplayPresenter() {
+        if (displayPresenter == null) {
+            displayPresenter = displayPresenterProvider.get();
+            displayPresenter.bind();
+        }
+        return displayPresenter;
+    }
 
 }
