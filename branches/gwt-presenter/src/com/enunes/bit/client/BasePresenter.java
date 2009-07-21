@@ -1,7 +1,12 @@
+/**
+ * 
+ */
 package com.enunes.bit.client;
 
-public interface BasePresenter {
+/**
+ * @author esnunes@gmail.com (Eduardo S. Nunes)
+ *
+ */
+public class BasePresenter {
 
-	BaseView getView();
-	
 }

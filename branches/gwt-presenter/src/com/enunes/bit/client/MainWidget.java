@@ -1,10 +1,12 @@
 package com.enunes.bit.client;
 
+import net.customware.gwt.presenter.client.widget.WidgetDisplay;
+
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class MainWidget extends Composite implements MainPresenter.View {
+public class MainWidget extends Composite implements MainPresenter.Display {
 
 	private final DockPanel panel;
 	private Widget content;
@@ -17,24 +19,30 @@ public class MainWidget extends Composite implements MainPresenter.View {
 
 	}
 
-	public Widget getWidget() {
-		return this;
-	}
-
-	public void addMenu(BaseView view) {
-		panel.add(view.getWidget(), DockPanel.NORTH);
-	}
-
-	public void addContent(BaseView view) {
-		removeContent();
-		content = view.getWidget();
-		panel.add(view.getWidget(), DockPanel.CENTER);
-	}
-
 	public void removeContent() {
 		if (content != null) {
 			panel.remove(content);
 		}
+	}
+
+	public void addContent(WidgetDisplay display) {
+		removeContent();
+		content = display.asWidget();
+		panel.add(content, DockPanel.CENTER);
+	}
+
+	public void addMenu(WidgetDisplay display) {
+		panel.add(display.asWidget(), DockPanel.NORTH);
+	}
+
+	public Widget asWidget() {
+		return this;
+	}
+
+	public void startProcessing() {
+	}
+
+	public void stopProcessing() {
 	}
 
 }

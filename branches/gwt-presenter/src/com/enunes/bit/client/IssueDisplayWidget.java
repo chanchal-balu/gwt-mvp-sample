@@ -20,7 +20,7 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 public class IssueDisplayWidget extends Composite implements
-		IssueDisplayPresenter.View {
+		IssueDisplayPresenter.Display {
 
 	private final Panel panel;
 	private final Label taskName;
@@ -81,10 +81,6 @@ public class IssueDisplayWidget extends Composite implements
 
 	}
 
-	public Widget getWidget() {
-		return this;
-	}
-
 	public HasValue<Integer> getStars() {
 		return stars;
 	}
@@ -103,6 +99,16 @@ public class IssueDisplayWidget extends Composite implements
 
 	public HasClickHandlers getRemoveClickHandlers() {
 		return removeButton;
+	}
+
+	public Widget asWidget() {
+		return this;
+	}
+
+	public void startProcessing() {
+	}
+
+	public void stopProcessing() {
 	}
 
 }
