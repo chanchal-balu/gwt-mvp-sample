@@ -24,87 +24,90 @@ import com.google.inject.Inject;
  * 
  */
 public class IssueEditPresenter extends
-        WidgetPresenter<IssueEditPresenter.Display> {
+		WidgetPresenter<IssueEditPresenter.Display> {
 
-    public interface Display extends WidgetDisplay {
+	public interface Display extends WidgetDisplay {
 
-        HasClickHandlers getSaveClickHandlers();
+		HasClickHandlers getSaveClickHandlers();
 
-        HasClickHandlers getCancelClickHandlers();
+		HasClickHandlers getCancelClickHandlers();
 
-        HasText getTaskName();
+		HasText getTaskName();
 
-        HasText getTaskReporter();
+		HasText getTaskReporter();
 
-        HasValue<Integer> getStars();
+		HasValue<Integer> getStars();
 
-    }
+	}
 
-    private Issue issue;
+	private Issue issue;
 
-    @Inject
-    public IssueEditPresenter(Display display, EventBus eventBus) {
-        super(display, eventBus);
-    }
+	@Inject
+	public IssueEditPresenter(Display display, EventBus eventBus) {
+		super(display, eventBus);
+	}
 
-    @Override
-    public Place getPlace() {
-        return null;
-    }
+	@Override
+	public Place getPlace() {
+		return null;
+	}
 
-    @Override
-    protected void onBind() {
+	@Override
+	protected void onBind() {
 
-        registerHandler(display.getCancelClickHandlers().addClickHandler(
-                new ClickHandler() {
-                    public void onClick(ClickEvent event) {
-                        eventBus.fireEvent(new IssueEditCanceledEvent(issue));
-                    }
-                }));
+		registerHandler(display.getCancelClickHandlers().addClickHandler(
+				new ClickHandler() {
+					public void onClick(ClickEvent event) {
+						eventBus.fireEvent(new IssueEditCanceledEvent(issue));
+					}
+				}));
 
-        registerHandler(display.getSaveClickHandlers().addClickHandler(
-                new ClickHandler() {
-                    public void onClick(ClickEvent event) {
-                        if (issue == null) {
-                            issue = new Issue(1);
-                        }
-                        issue.setTaskName(display.getTaskName().getText());
-                        issue.setTaskReporter(display.getTaskReporter()
-                                .getText());
-                        try {
-                            issue.setStars(display.getStars().getValue());
-                        } catch (NumberFormatException e) {
-                            issue.setStars(0);
-                        }
-                        eventBus.fireEvent(new IssueUpdatedEvent(issue));
-                    }
-                }));
+		registerHandler(display.getSaveClickHandlers().addClickHandler(
+				new ClickHandler() {
+					public void onClick(ClickEvent event) {
+						if (issue == null) {
+							issue = new Issue(1);
+						}
+						issue.setTaskName(display.getTaskName().getText());
+						issue.setTaskReporter(display.getTaskReporter()
+								.getText());
+						try {
+							issue.setStars(display.getStars().getValue());
+						} catch (NumberFormatException e) {
+							issue.setStars(0);
+						}
+						eventBus.fireEvent(new IssueUpdatedEvent(issue));
+					}
+				}));
 
-    }
+	}
 
-    @Override
-    protected void onPlaceRequest(PlaceRequest request) {
-    }
+	@Override
+	protected void onPlaceRequest(PlaceRequest request) {
+	}
 
-    @Override
-    protected void onUnbind() {
-    }
+	@Override
+	protected void onUnbind() {
+	}
 
-    public void refreshDisplay() {
-    }
+	public void refreshDisplay() {
+	}
 
-    public void createIssue() {
-        issue = null;
-    }
+	public void createIssue() {
+		issue = null;
+		display.getTaskName().setText(null);
+		display.getTaskReporter().setText(null);
+		display.getStars().setValue(0);
+	}
 
-    public void editIssue(Issue issue) {
-        this.issue = issue;
-        display.getTaskName().setText(issue.getTaskName());
-        display.getTaskReporter().setText(issue.getTaskReporter());
-        display.getStars().setValue(issue.getStars());
-    }
+	public void editIssue(Issue issue) {
+		this.issue = issue;
+		display.getTaskName().setText(issue.getTaskName());
+		display.getTaskReporter().setText(issue.getTaskReporter());
+		display.getStars().setValue(issue.getStars());
+	}
 
-    public void revealDisplay() {
-    }
+	public void revealDisplay() {
+	}
 
 }
