@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.6.4//EN" "http://google-web-toolkit.googlecode.com/svn/tags/1.6.4/distro-source/core/src/gwt-module.dtd">
+<module rename-to='bit'>
+	<inherits name='com.google.gwt.user.User' />
+	<inherits name='com.google.gwt.user.theme.standard.Standard' />
+	<inherits name='com.google.gwt.inject.Inject' />
+	<inherits name='org.enunes.gwt.mvp.Mvp' />
+	<entry-point class='org.enunes.gwt.sample.bit.client.Bit' />
+</module>
